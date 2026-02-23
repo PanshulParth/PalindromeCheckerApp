@@ -1,15 +1,24 @@
 public class PalindromeCheckerApp {
-/**Use Case 1: Application Entry & Welcome Message*/
+/**Use Case 2: Hardcoded Palindrome Validation*/
 public static void main(String[] args) {
 
-    // Display welcome message
-    System.out.println("Welcome to the Palindrome Checker Management System");
+    // Hardcoded string
+    String input = "madam";
 
-    // Display application version
-    System.out.println("Version : 1.0");
+    boolean isPalindrome = true;
 
-    // Display initialization status
-    System.out.println("System initialized successfully.");
+    // Loop only till half of the string length
+    for (int i = 0; i < input.length() / 2; i++) {
+
+        if (input.charAt(i) != input.charAt(input.length() - 1 - i)) {
+            isPalindrome = false;
+            break;
+        }
+    }
+
+    // Required Output Format
+    System.out.println("Input text: " + input);
+    System.out.println("Is it a Palindrome? : " + isPalindrome);
 }
 }
 
