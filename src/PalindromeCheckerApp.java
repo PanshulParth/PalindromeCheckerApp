@@ -2,90 +2,41 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class PalindromeCheckerApp {
-    static class Node {
-        char data;
-        Node next;
-
-        Node(char data) {
-            this.data = data;
-            this.next = null;
-        }
-    }
-
-    // Head of linked list
-    static Node head = null;
-
-    // Method to insert node at end
-    static void insert(char data) {
-        Node newNode = new Node(data);
-
-        if (head == null) {
-            head = newNode;
-            return;
-        }
-
-        Node temp = head;
-        while (temp.next != null) {
-            temp = temp.next;
-        }
-        temp.next = newNode;
-    }
-
-    // Method to check palindrome using linked list
-    static boolean isPalindrome() {
-
-        if (head == null || head.next == null)
-            return true;
-
-        Node slow = head;
-        Node fast = head;
-
-        // Find middle using fast & slow pointers
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-
-        // Reverse second half
-        Node prev = null;
-        Node current = slow;
-        Node next;
-
-        while (current != null) {
-            next = current.next;
-            current.next = prev;
-            prev = current;
-            current = next;
-        }
-
-        // Compare first half & reversed second half
-        Node firstHalf = head;
-        Node secondHalf = prev;
-
-        while (secondHalf != null) {
-            if (firstHalf.data != secondHalf.data) {
-                return false;
-            }
-            firstHalf = firstHalf.next;
-            secondHalf = secondHalf.next;
-        }
-
-        return true;
-    }
-
+    /**
+     * Application entry point for UC9.
+     *
+     * @param args Command-line arguments
+     */
     public static void main(String[] args) {
 
         // Define input string
-        String input = "level";
+        String input = "madam";
 
-        // Convert string to linked list
-        for (char c : input.toCharArray()) {
-            insert(c);
-        }
-
-        boolean result = isPalindrome();
+        boolean result = check(input, 0, input.length() - 1);
 
         System.out.println("Input : " + input);
         System.out.println("Is Palindrome? : " + result);
+    }
+
+    /**
+     * Recursively checks whether a string is palindrome.
+     *
+     * @param s     Input string
+     * @param start Starting index
+     * @param end   Ending index
+     * @return true if palindrome, otherwise false
+     */
+    private static boolean check(String s, int start, int end) {
+
+        // Base condition: indices crossed or equal
+        if (start >= end)
+            return true;
+
+        // If mismatch found
+        if (s.charAt(start) != s.charAt(end))
+            return false;
+
+        // Recursive call
+        return check(s, start + 1, end - 1);
     }
 }
