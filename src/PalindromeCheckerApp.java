@@ -2,89 +2,46 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class PalindromeCheckerApp {
+    /**
+     * Application entry point for UC13.
+     *
+     * @param args Command-line arguments
+     */
     public static void main(String[] args) {
 
         String input = "level";
 
-        // Choose strategy at runtime
-        PalindromeStrategy strategy;
+        // Capture start time
+        long startTime = System.nanoTime();
 
-        // Change strategy here if needed
-        strategy = new StackStrategy();
-        // strategy = new DequeStrategy();
+        boolean result = isPalindrome(input);
 
-        boolean result = strategy.check(input);
+        // Capture end time
+        long endTime = System.nanoTime();
+
+        // Calculate execution time
+        long executionTime = endTime - startTime;
 
         System.out.println("Input : " + input);
         System.out.println("Is Palindrome? : " + result);
+        System.out.println("Execution Time : " + executionTime + " ns");
     }
-}
 
-/**
- * =========================================================
- * INTERFACE - PalindromeStrategy
- * =========================================================
- *
- * Defines a contract for palindrome checking algorithms.
- */
-interface PalindromeStrategy {
-    boolean check(String input);
-}
+    /**
+     * Simple palindrome checking method.
+     */
+    private static boolean isPalindrome(String input) {
 
-/**
- * =========================================================
- * CLASS - StackStrategy
- * =========================================================
- *
- * Stack-based palindrome validation.
- */
-class StackStrategy implements PalindromeStrategy {
+        int start = 0;
+        int end = input.length() - 1;
 
-    @Override
-    public boolean check(String input) {
-
-        java.util.Stack<Character> stack = new java.util.Stack<>();
-
-        // Push characters onto stack
-        for (char c : input.toCharArray()) {
-            stack.push(c);
-        }
-
-        // Compare while popping
-        for (char c : input.toCharArray()) {
-            if (c != stack.pop()) {
+        while (start < end) {
+            if (input.charAt(start) != input.charAt(end)) {
                 return false;
             }
+            start++;
+            end--;
         }
-
-        return true;
-    }
-}
-
-/**
- * =========================================================
- * CLASS - DequeStrategy
- * =========================================================
- *
- * Deque-based palindrome validation.
- */
-class DequeStrategy implements PalindromeStrategy {
-
-    @Override
-    public boolean check(String input) {
-
-        java.util.ArrayDeque<Character> deque = new java.util.ArrayDeque<>();
-
-        for (char c : input.toCharArray()) {
-            deque.add(c);
-        }
-
-        while (deque.size() > 1) {
-            if (deque.removeFirst() != deque.removeLast()) {
-                return false;
-            }
-        }
-
         return true;
     }
 }
